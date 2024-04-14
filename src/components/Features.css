@@ -1,0 +1,28 @@
+:root {
+    --main-color: #0E1116;
+    --hover-main: #643A07;
+    --hover-success: #3aac54;
+    --green: #23d64d;
+    --hover-error: #b63939;
+    --border: #c9c9c9;
+    --white: #ffffff;
+    --backgroud: #383838;
+    --black: #000000;
+    --hover-info: #457ef0;
+    --header: #256EFF;
+    --footer: #0E1116;
+    --roboto: 'Roboto', sans-serif;
+    --modal: #D6DBDF;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.title {
+    display: flex;
+    align-content: center;
+    align-items: center;
+}

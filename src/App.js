@@ -1,23 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+// import './App.css';
+import React, { useEffect, useState } from 'react';
+import FeatureList from './components/FeatureList';
 
-function App() {
+const App = () => {
+  const [features, setFeatures] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:3000/api/features')
+    .then(response => response.json())
+    .then(data => setFeatures(data))
+    .catch(error => console.error('Error fetching sismic data:', error));
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Sismic Data App</h1>
+      <FeatureList features={features} />
     </div>
   );
 }
