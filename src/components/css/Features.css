@@ -1,0 +1,280 @@
+:root {
+    --main-color: #0E1116;
+    --hover-main: #643A07;
+    --hover-success: #3aac54;
+    --green: #23d64d;
+    --hover-error: #b63939;
+    --border: #c9c9c9;
+    --white: #ffffff;
+    --backgroud: #383838;
+    --black: #000000;
+    --hover-info: #457ef0;
+    --header: #256EFF;
+    --footer: #0E1116;
+    --modal: #D6DBDF;
+    --disabled: #999;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.title-container {
+    display: flex;
+    justify-content: center;
+    font-style: italic;
+    font-weight: bold;
+    font-variant: normal;
+    font-size: 18px;
+}
+
+.feature-list {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(200px, 1fr));
+    grid-auto-rows: auto;
+    gap: 5px;
+    width: 100%;
+    height: 100%;
+}
+
+.item {
+    background-color: #f0f0f0;
+    padding: 20px;
+    text-align: center;
+    border: 5px solid var(--backgroud);
+    margin: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.container {
+    display: grid;
+    grid-gap: 10px;
+}
+
+.filter-container {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 5px 5px;
+    color: var(--white);
+    background-color: var(--hover-info);
+    border: 1px solid var(--backgroud);
+}
+
+.filter-checkbox,
+.filter-select {
+    margin-right: 20px;
+}
+
+.comments-container {
+    margin-top: 20px;
+}
+
+.comments-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.comments-list {
+    list-style-type: none;
+    padding: 0;
+    display: flex; /* Usamos flexbox */
+    flex-wrap: wrap; /* Permitimos que los elementos se envuelvan si no caben en una sola fila */
+    background-color: var(--disabled);
+    border-radius: 10px;
+    margin: 5px;
+} 
+
+.comment {
+    background-color: var(--modal);
+    border: 1px solid var(--border);
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.sendComment,
+.button_comment_feature,
+.url {
+    font-style: italic;
+    font-weight: bold;
+    font-variant: normal;
+    color: var(--white);
+    background-color: var(--hover-info);
+    cursor: pointer;
+    filter: drop-shadow(0px 0px 10px rgb(204, 176, 176));
+    padding: 4px;
+    border-radius: 10px;
+}
+
+.information {
+    text-align: center;
+    padding: 10px;
+    text-shadow: var(--backgroud);
+    font-style: italic;
+    font-weight: bold;
+    font-variant: normal;
+    font-size: 28px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: var(--backgroud);
+
+    & button,
+    & span {
+        margin: 5px;
+        /* Ajusta el espacio entre los botones y el número de página */
+        padding: 10px 10px;
+        /* Ajusta el padding para hacer los botones más grandes */
+        border: 2px solid var(--backgroud);
+        border-radius: 5px;
+        cursor: auto;
+        color: var(--white);
+        background-color: var(--hover-info);
+    }
+
+    & button {
+        color: var(--white);
+        background-color: var(--hover-info);
+    }
+
+    & button:hover {
+        background-color: var(--hover-info);
+    }
+
+    & button:disabled {
+        color: var(--disabled);
+        background-color: var(--modal);
+        cursor: not-allowed;
+    }
+}
+
+.filter-dropdown {
+    position: relative;
+}
+
+.filter-dropdown-select {
+    width: 200px;
+    /* Ancho deseado para la lista desplegable */
+    padding: 8px;
+    border: 1px solid var(--white);
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: var(--white);
+}
+
+.filter-dropdown-select:focus {
+    outline: none;
+    /* Quitar el contorno al recibir foco */
+}
+
+.filter-dropdown-options {
+    position: absolute;
+    top: calc(100% + 4px);
+    /* Posición debajo del select */
+    left: 0;
+    width: 100%;
+    max-height: 200px;
+    /* Altura máxima de la lista desplegable */
+    overflow-y: auto;
+    /* Agregar scroll si hay muchas opciones */
+    background-color: var(--backgroud);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    /* Asegurarse de que esté por encima del resto del contenido */
+}
+
+.filter-dropdown-option {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.filter-dropdown-option:hover {
+    background-color: #f0f0f0;
+    /* Cambiar el color de fondo al pasar el ratón */
+}
+
+.filter-dropdown-option.selected {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.label-checkbox {
+    margin-right: 12px;
+}
+
+.comments,
+.text_items,
+.text-filter,
+.filter-dropdown-toggle {
+    font-style: italic;
+    font-weight: bold;
+    font-variant: normal;
+    font-size: 13px;
+}
+
+.comments {
+    margin: 10px;
+}
+
+.text_items p {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.modal {
+    display: block; /* Para mostrar el modal */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    overflow: auto;
+}
+
+.modal-content {
+    background-color: var(--modal);
+    margin: 20% auto; /* Centrar verticalmente */
+    padding: 20px;
+    border: 1px solid var(--footer);
+    width: 60%; /* Ancho del modal */
+    border-radius: 40px;
+}
+
+.close {
+    color: var(--black);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.close:hover,
+.close:focus {
+    color: var(--backgroud);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 10px;
+    text-align: justify;
+    text-indent: 10px;
+    word-wrap: break-word;
+}

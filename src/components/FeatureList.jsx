@@ -1,105 +1,68 @@
-//import { motion } from 'framer-motion';
-import './Features.css';
+import './css/Features.css';
 import FeatureItem from './FeatureItem';
-import PropTypes from 'prop-types';
-import React, { useState, useEffect } from 'react'
+import React from 'react'
+import useSismicData from './hook/useSismicData';
 
-const FeatureList = ({ features }) => {
-    const [filters, setFilters] = useState({
-        magType: [],
-        page: 1,
-        perPage: 25
-    });
-    const [filteredFeatures, setFilteredFeatures] = useState([]);
-    const [pagination, setPagination] = useState({});
+const FeatureList = () => {
 
-    const handlePageChange = (newPage) => {
-        setFilters(prevFilters => ({
-            ...prevFilters,
-            page: newPage
-        }));
-    };
-
-    const handlePerPageChange = (e) => {
-        const newPerPage = parseInt(e.target.value);
-        if (newPerPage <= 1000) {
-            setFilters(prevFilters => ({
-                ...prevFilters,
-                perPage: newPerPage
-            }));
-        }
-    };
-
-    const handleMagTypeChange = (e) => {
-        const { value, checked } = e.target;
-        setFilters(prevFilters => ({
-            ...prevFilters,
-            magType: checked ? [...prevFilters.magType, value] : prevFilters.magType.filter(type => type !== value)
-        }));
-    };
-
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(`http://localhost:3000/api/features?page=${filters.page}&per_page=${filters.perPage}&filters[mag_type]=${filters.magType.join(',')}`);
-                const data = await response.json();
-                setFilteredFeatures(data.data);
-                setPagination(data.pagination);
-            } catch (error) {
-                console.error('Error fetching features:', error);
-            }
-        };
-
-        fetchData();
-    }, [filters]);
-
-    // Combinar los datos originales con los datos filtrados
-    const combinedFeatures = [...features, ...filteredFeatures];
+    const { features, pagination, filters, handleMagTypeChange, handlePageChange, handlePerPageChange, createComment, fetchCommentsForFeature } = useSismicData();
 
     return (
         <div>
-            <h2>Features</h2>
+            <h2 className='information'>Information of the Features</h2>
+            {/* Controles de filtro */}
+            <div className="filter-container">
+                <div className="filter-checkbox">
+                    <label className='label-checkbox'>Select Mag Type:</label>
+                    <select
+                        className='text-filter'
+                        value={filters.magType || ''}
+                        onChange={(e) => handleMagTypeChange(e.target.value === 'all' ? null : e.target.value)}
+                    >
+                        <option className='text-filter' value="all">All mag types</option>
+                        <option className='text-filter' value="mh">mh</option>
+                        <option className='text-filter' value="mb_lg">mb_lg</option>
+                        <option className='text-filter' value="mw">mw</option>
+                        <option className='text-filter' value="mb">mb</option>
+                        <option className='text-filter' value="md">md</option>
+                        <option className='text-filter' value="mwr">mwr</option>
+                        <option className='text-filter' value="ml">ml</option>
+                        <option className='text-filter' value="mww">mww</option>
+                    </select>
+                </div>
+                <div className="filter-select">
+                    <select className='text-filter' value={filters.perPage} onChange={handlePerPageChange}>
+                        <option className='text-filter' value="25">25</option>
+                        <option className='text-filter' value="20">20</option>
+                        <option className='text-filter' value="10">10</option>
+                    </select>
+                </div>
+            </div>
             <div className="feature-list">
-                {combinedFeatures.map(feature => (
-                    <FeatureItem key={feature.id} feature={feature.attributes} />
+                {features.map((feature, index) => (
+                    <div className="item" key={feature.id}>
+                        <FeatureItem
+                            id={feature.id}
+                            feature={feature.attributes}
+                            links={feature.links}
+                            createComment={createComment}
+                            magType={filters.magType}
+                            fetchCommentsForFeature={fetchCommentsForFeature}
+                        />
+                    </div>
                 ))}
             </div>
             <div>
-                {/* Controles de filtro */}
-                <div className="filter-container">
-                    <div className="filter-checkbox">
-                        <label>
-                            <input type="checkbox" value="md" onChange={handleMagTypeChange} /> md
-                        </label>
-                    </div>
-                    <div className="filter-select">
-                        <select value={filters.perPage} onChange={handlePerPageChange}>
-                            <option value="10">10</option>
-                            <option value="20">20</option>
-                            {/* Otras opciones de perPage */}
-                        </select>
-                    </div>
-                </div>
-                {/* Resultados filtrados */}
-                <div>
-                    {filteredFeatures.map(feature => (
-                        <div key={feature.id}>{feature.attributes.title}</div>
-                    ))}
-                </div>
                 {/* Paginación */}
-                <div>
+                <div className='pagination'>
                     <button disabled={filters.page === 1} onClick={() => handlePageChange(filters.page - 1)}>Previous</button>
-                    <span>{`Page ${filters.page} of ${pagination.total_pages}`}</span>
-                    <button disabled={filters.page >= pagination.total_pages} onClick={() => handlePageChange(filters.page + 1)}>Next</button>
+                    <span>{`Page ${filters.page} of ${pagination.totalPages}`}</span>
+                    <button disabled={filters.page >= pagination.totalPages} onClick={() => handlePageChange(filters.page + 1)}>Next</button>
                 </div>
             </div>
         </div>
     );
 };
 
-FeatureList.propTypes = {
-    features: PropTypes.arrayOf(PropTypes.object).isRequired,
-}
-
 export default FeatureList;
+
