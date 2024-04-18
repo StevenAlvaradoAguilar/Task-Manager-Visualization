@@ -9,7 +9,10 @@ const useSismicData = () => {
     perPage: 25,
     magType: null,
   });
-  const [isLoading, setIsLoading] = useState(false); // Bandera de estado para indicar si se está cargando
+
+  // Bandera de estado para indicar si se está cargando
+  const [isLoading, setIsLoading] = useState(false); 
+  
   const backendPort = process.env.REACT_APP_BACKEND_PORT || 4001;
 
   useDeepCompareEffect(() => {
