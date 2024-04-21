@@ -10,7 +10,7 @@ const useSismicData = () => {
     magType: null,
   });
   const [isLoading, setIsLoading] = useState(false); // Bandera de estado para indicar si se está cargando
-  const backendPort = process.env.REACT_APP_BACKEND_PORT;
+  //const backendPort = process.env.REACT_APP_BACKEND_PORT;
 
   useDeepCompareEffect(() => {
     const fetchData = async () => {
