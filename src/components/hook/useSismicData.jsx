@@ -32,7 +32,8 @@ const useSismicData = () => {
         console.log(backendPort);
         url = `http://localhost:${backendPort}/api/features?${params}`;
       } else {
-        url = `https://task-manager-production-d1ed.up.railway.app/api/features?${params}`;
+        const backendUrl = process.env.REACT_APP_BACKEND_URL;
+        url = `${backendUrl}/api/features?${params}`;
         console.log(url);
       }
 
