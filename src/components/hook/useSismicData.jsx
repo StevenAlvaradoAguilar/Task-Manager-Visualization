@@ -53,7 +53,6 @@ const useSismicData = () => {
 
       } catch (error) {
         console.error("Error fetching sismic data:", error);
-        //console.log(error);
       } finally {
         // Establecer la bandera isLoading a false después de completar la solicitud
         setIsLoading(false);
