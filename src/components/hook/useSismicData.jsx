@@ -27,7 +27,7 @@ const useSismicData = () => {
       });
 
       //const url = `http://localhost:${backendPort}/api/features?${params}`;
-      const url = `${backendPort}/api/features?${params}`;
+      const url = `api/features?${params}`;
 
       try {
         const response = await fetch(url);
@@ -84,7 +84,7 @@ const useSismicData = () => {
 
   const createComment = async (featureId, body) => {
     //const url = `http://localhost:${backendPort}/api/features/${featureId}/create_comment`;
-    const url = `${backendPort}/api/features/${featureId}/create_comment`;
+    const url = `api/features/${featureId}/create_comment`;
     const payload = {
       comment: {
         body: body
@@ -118,7 +118,8 @@ const useSismicData = () => {
   const fetchCommentsForFeature = async (featureId) => {
     try {
       //const response = await fetch(`http://localhost:${backendPort}/api/features/${featureId}/comments`);
-      const response = await fetch(`${backendPort}/api/features/${featureId}/comments`);
+      const response = await fetch(`api/features/${featureId}/comments`);
+
       if (!response.ok) {
         throw new Error("Failed to fetch comments. Status: " + response.status);
       }
