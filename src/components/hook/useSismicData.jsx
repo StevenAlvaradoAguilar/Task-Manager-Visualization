@@ -10,7 +10,7 @@ const useSismicData = () => {
     magType: null,
   });
   const [isLoading, setIsLoading] = useState(false); // Bandera de estado para indicar si se está cargando
-  //const backendPort = process.env.REACT_APP_BACKEND_PORT;
+  const backendPort = process.env.REACT_APP_BACKEND_PORT;
 
   useDeepCompareEffect(() => {
     const fetchData = async () => {
@@ -26,8 +26,7 @@ const useSismicData = () => {
         mag_types: filters.magType
       });
 
-      //const url = `http://localhost:${backendPort}/api/features?${params}`;
-      const url = `/api/features?${params}`;
+      const url = `http://localhost:${backendPort}/api/features?${params}`;
 
       try {
         const response = await fetch(url);
@@ -83,8 +82,7 @@ const useSismicData = () => {
   };
 
   const createComment = async (featureId, body) => {
-    //const url = `http://localhost:${backendPort}/api/features/${featureId}/create_comment`;
-    const url = `/api/features/${featureId}/create_comment`;
+    const url = `http://localhost:${backendPort}/api/features/${featureId}/create_comment`;
     const payload = {
       comment: {
         body: body
@@ -117,9 +115,7 @@ const useSismicData = () => {
 
   const fetchCommentsForFeature = async (featureId) => {
     try {
-      //const response = await fetch(`http://localhost:${backendPort}/api/features/${featureId}/comments`);
-      const response = await fetch(`/api/features/${featureId}/comments`);
-
+      const response = await fetch(`http://localhost:${backendPort}/api/features/${featureId}/comments`);
       if (!response.ok) {
         throw new Error("Failed to fetch comments. Status: " + response.status);
       }
