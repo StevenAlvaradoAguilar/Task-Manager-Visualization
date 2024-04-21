@@ -28,7 +28,7 @@ const useSismicData = () => {
 
       let url;
       console.log(process.env.NODE_ENV);
-      if (process.env.NODE_ENV === 'development') {
+      if (process.env.NODE_ENV === 'development' && backendPort !== "https://task-manager-visualization-production.up.railway.app/") {
         console.log(backendPort);
         url = `http://localhost:${backendPort}/api/features?${params}`;
       } else {
