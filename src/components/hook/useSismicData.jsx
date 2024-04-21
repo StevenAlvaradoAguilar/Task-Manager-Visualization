@@ -26,13 +26,7 @@ const useSismicData = () => {
         mag_types: filters.magType
       });
 
-      let url;
-
-      if (process.env.NODE_ENV === 'development') {
-        url = `http://localhost:${backendPort}/api/features?${params}`;
-      } else {
-        url = `https://task-manager-production-d1ed.up.railway.app/api/features?${params}`;
-      }
+      const url = `https://task-manager-production-d1ed.up.railway.app/api/features?${params}`;
 
       try {
         const response = await fetch(url);
