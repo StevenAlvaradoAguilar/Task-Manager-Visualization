@@ -18,7 +18,7 @@ const useSismicData = () => {
       if (isLoading) return;
 
       // Establecer la bandera isLoading a true antes de hacer la solicitud
-      setIsLoading(true); 
+      setIsLoading(true);
 
       const params = new URLSearchParams({
         page: filters.page,
@@ -33,6 +33,12 @@ const useSismicData = () => {
         if (!response.ok) {
           throw new Error("Failed to fetch data. Status: " + response.status);
         }
+
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+          throw new Error("Unexpected response type. Expected JSON.");
+        }
+
         const { data, pagination: responseDataPagination } = await response.json();
 
         setFeatures(data);
@@ -48,7 +54,7 @@ const useSismicData = () => {
         //console.log(error);
       } finally {
         // Establecer la bandera isLoading a false después de completar la solicitud
-        setIsLoading(false); 
+        setIsLoading(false);
       }
     };
 
@@ -107,7 +113,7 @@ const useSismicData = () => {
 
       // Actualizar la lista de comentarios
       const commentsForFeature = await fetchCommentsForFeature(featureId);
-      return { ...data, comments: commentsForFeature }; 
+      return { ...data, comments: commentsForFeature };
     } catch (error) {
       console.error('Error creating comment:', error);
     }
