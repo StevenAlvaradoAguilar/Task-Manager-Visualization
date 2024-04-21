@@ -10,6 +10,7 @@ const useSismicData = () => {
     magType: null,
   });
   const [isLoading, setIsLoading] = useState(false); // Bandera de estado para indicar si se está cargando
+  const backendPort = process.env.REACT_APP_BACKEND_PORT || 3000;
 
   useDeepCompareEffect(() => {
     const fetchData = async () => {
@@ -27,13 +28,13 @@ const useSismicData = () => {
 
       let url;
       console.log(process.env.NODE_ENV);
-      if (process.env.NODE_ENV === 'development') {
-        const backendPort = process.env.REACT_APP_BACKEND_PORT || 3000;
+      url = `http://localhost:${backendPort}/api/features?${params}`;
+      if (process.env.NODE_ENV === 'development' && url !== "https://task-manager-production-e8c3.up.railway.app") {
         console.log(backendPort);
         url = `http://localhost:${backendPort}/api/features?${params}`;
       } else {
         const backendUrl = process.env.REACT_APP_BACKEND_URL;
-        url = `${backendUrl}/api/features?${params}`;
+        url = `${backendUrl}api/features?${params}`;
         console.log(url);
       }
 
@@ -92,7 +93,6 @@ const useSismicData = () => {
   const createComment = async (featureId, body) => {
     let url;
     if (process.env.NODE_ENV === 'development') {
-      const backendPort = process.env.REACT_APP_BACKEND_PORT || 3000;
       url = `http://localhost:${backendPort}/api/features/${featureId}/create_comment`;
     } else {
       url = `https://task-manager-production-d1ed.up.railway.app/api/features/${featureId}/create_comment`;
@@ -133,7 +133,6 @@ const useSismicData = () => {
       //const response = await fetch(`http://localhost:${backendPort}/api/features/${featureId}/comments`);
       let response;
       if (process.env.NODE_ENV === 'development') {
-        const backendPort = process.env.REACT_APP_BACKEND_PORT || 3000;
         response = await fetch(`http://localhost:${backendPort}/api/features/${featureId}/comments`);
       } else {
         response = await fetch(`https://task-manager-production-d1ed.up.railway.app/api/features/${featureId}/comments`);
