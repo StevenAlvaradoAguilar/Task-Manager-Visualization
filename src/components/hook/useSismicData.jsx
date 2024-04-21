@@ -26,12 +26,14 @@ const useSismicData = () => {
       });
 
       let url;
+      console.log(process.env.NODE_ENV);
       if (process.env.NODE_ENV === 'development') {
         const backendPort = process.env.REACT_APP_BACKEND_PORT || 3000;
         console.log(backendPort);
         url = `http://localhost:${backendPort}/api/features?${params}`;
       } else {
         url = `https://task-manager-production-d1ed.up.railway.app/api/features?${params}`;
+        console.log(url);
       }
 
       try {
