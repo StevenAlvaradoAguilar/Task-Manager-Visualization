@@ -28,8 +28,7 @@ const useSismicData = () => {
 
       let url;
       console.log(process.env.NODE_ENV);
-      url = `http://localhost:${backendPort}/api/features?${params}`;
-      if (process.env.NODE_ENV === 'development' && url !== "https://task-manager-production-e8c3.up.railway.app") {
+      if (process.env.NODE_ENV === 'development') {
         console.log(backendPort);
         url = `http://localhost:${backendPort}/api/features?${params}`;
       } else {
