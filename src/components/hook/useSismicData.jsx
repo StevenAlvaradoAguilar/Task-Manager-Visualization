@@ -10,7 +10,6 @@ const useSismicData = () => {
     magType: null,
   });
   const [isLoading, setIsLoading] = useState(false); // Bandera de estado para indicar si se está cargando
-  const backendPort = process.env.REACT_APP_BACKEND_PORT || 4001;
 
   useDeepCompareEffect(() => {
     const fetchData = async () => {
@@ -18,7 +17,7 @@ const useSismicData = () => {
       if (isLoading) return;
 
       // Establecer la bandera isLoading a true antes de hacer la solicitud
-      setIsLoading(true); 
+      setIsLoading(true);
 
       const params = new URLSearchParams({
         page: filters.page,
@@ -26,7 +25,14 @@ const useSismicData = () => {
         mag_types: filters.magType
       });
 
-      const url = `http://localhost:${backendPort}/api/features?${params}`;
+      let url;
+      if (process.env.NODE_ENV === 'development') {
+        const backendPort = process.env.REACT_APP_BACKEND_PORT || 3000;
+        console.log(backendPort);
+        url = `http://localhost:${backendPort}/api/features?${params}`;
+      } else {
+        url = `https://task-manager-production-d1ed.up.railway.app/api/features?${params}`;
+      }
 
       try {
         const response = await fetch(url);
@@ -48,7 +54,7 @@ const useSismicData = () => {
         //console.log(error);
       } finally {
         // Establecer la bandera isLoading a false después de completar la solicitud
-        setIsLoading(false); 
+        setIsLoading(false);
       }
     };
 
@@ -82,7 +88,14 @@ const useSismicData = () => {
   };
 
   const createComment = async (featureId, body) => {
-    const url = `http://localhost:${backendPort}/api/features/${featureId}/create_comment`;
+    let url;
+    if (process.env.NODE_ENV === 'development') {
+      const backendPort = process.env.REACT_APP_BACKEND_PORT || 3000;
+      url = `http://localhost:${backendPort}/api/features/${featureId}/create_comment`;
+    } else {
+      url = `https://task-manager-production-d1ed.up.railway.app/api/features/${featureId}/create_comment`;
+    }
+
     const payload = {
       comment: {
         body: body
@@ -107,7 +120,7 @@ const useSismicData = () => {
 
       // Actualizar la lista de comentarios
       const commentsForFeature = await fetchCommentsForFeature(featureId);
-      return { ...data, comments: commentsForFeature }; 
+      return { ...data, comments: commentsForFeature };
     } catch (error) {
       console.error('Error creating comment:', error);
     }
@@ -115,7 +128,15 @@ const useSismicData = () => {
 
   const fetchCommentsForFeature = async (featureId) => {
     try {
-      const response = await fetch(`http://localhost:${backendPort}/api/features/${featureId}/comments`);
+      //const response = await fetch(`http://localhost:${backendPort}/api/features/${featureId}/comments`);
+      let response;
+      if (process.env.NODE_ENV === 'development') {
+        const backendPort = process.env.REACT_APP_BACKEND_PORT || 3000;
+        response = await fetch(`http://localhost:${backendPort}/api/features/${featureId}/comments`);
+      } else {
+        response = await fetch(`https://task-manager-production-d1ed.up.railway.app/api/features/${featureId}/comments`);
+      }
+
       if (!response.ok) {
         throw new Error("Failed to fetch comments. Status: " + response.status);
       }
