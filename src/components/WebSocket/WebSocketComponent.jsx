@@ -1,17 +1,21 @@
 import { useEffect } from 'react';
 import io from 'socket.io-client';
 
-const WebSocketComponent = () => {
+const WebSocketComponent = ({ feature_id }) => {
     useEffect(() => {
-        const socket = io('ws://task-manager-visualization-production.up.railway.app/cable');
+        const socket = io('wss://task-manager-visualization-production.up.railway.app/cable', {
+            secure: true,
+            // Esto es necesario si el certificado no está validado por una autoridad de certificación reconocida
+            rejectUnauthorized: false
+        });
 
         socket.on('connect', () => {
             console.log('Connected to WebSocket server');
-            socket.emit('subscribe', { channel: 'FeatureCommentsChannel', feature_id: '1' });
+            socket.emit('subscribe', { channel: 'FeatureCommentsChannel', feature_id: feature_id });
         });
 
-        socket.on('feature_comments_1', (data) => {
-            console.log('Received comment for feature 1:', data);
+        socket.on('feature_comments_' + feature_id, (data) => {
+            console.log('Received comment for feature ' + feature_id, data);
         });
 
         socket.on('disconnect', () => {
@@ -22,7 +26,7 @@ const WebSocketComponent = () => {
             // Cleanup function to close WebSocket connection
             socket.disconnect();
         };
-    }, []);
+    }, [feature_id]);
 
     return null;
 };
