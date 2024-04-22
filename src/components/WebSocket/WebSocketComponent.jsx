@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import io from 'socket.io-client';
 
 const WebSocketComponent = () => {
     useEffect(() => {
-        const socket = io('wss://task-manager-visualization-production.up.railway.app/cable');
+        const socket = io('wss://task-manager-visualization-production.up.railway.app/6248/cable');
 
         socket.on('connect', () => {
             console.log('Connected to WebSocket server');
