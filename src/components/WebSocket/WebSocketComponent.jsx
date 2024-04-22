@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 
 const WebSocketComponent = () => {
     useEffect(() => {
-        const socket = io('ws://task-manager-visualization-production.up.railway.app/6248/cable');
+        const socket = io('ws://task-manager-visualization-production.up.railway.app/cable');
 
         socket.on('connect', () => {
             console.log('Connected to WebSocket server');
