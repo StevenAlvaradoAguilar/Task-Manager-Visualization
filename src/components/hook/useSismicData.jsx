@@ -9,7 +9,10 @@ const useSismicData = () => {
     perPage: 25,
     magType: null,
   });
-  const [isLoading, setIsLoading] = useState(false); // Bandera de estado para indicar si se está cargando
+  // Bandera de estado para indicar si se está cargando
+  const [isLoading, setIsLoading] = useState(false); 
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
 
   useDeepCompareEffect(() => {
     const fetchData = async () => {
@@ -49,8 +52,8 @@ const useSismicData = () => {
         });
 
       } catch (error) {
-        console.error("Error fetching sismic data:", error);
-        //console.log(error);
+        setAlertMessage('Error fetching sismic data: ', error);
+        setAlertOpen(true);
       } finally {
         // Establecer la bandera isLoading a false después de completar la solicitud
         setIsLoading(false);
@@ -83,7 +86,6 @@ const useSismicData = () => {
         perPage: newPerPage,
       }));
     }
-    console.log(newPerPage);
   };
 
   const createComment = async (featureId, body) => {
@@ -114,7 +116,8 @@ const useSismicData = () => {
       const commentsForFeature = await fetchCommentsForFeature(featureId);
       return { ...data, comments: commentsForFeature };
     } catch (error) {
-      console.error('Error creating comment:', error);
+      setAlertMessage('Error creating comment: ', error);
+      setAlertOpen(true);
     }
   }
 
@@ -127,12 +130,26 @@ const useSismicData = () => {
       const data = await response.json();
       return data;
     } catch (error) {
-      console.error('Error fetching comments:', error);
+      setAlertMessage('Error fetching comments: ', error);
+      setAlertOpen(true);
       return []; // Devolver un array vacío en caso de error
     }
   };
 
-  return { features, setFeatures, pagination, filters, handleMagTypeChange, handlePageChange, handlePerPageChange, createComment, fetchCommentsForFeature };
+  return {
+    features, 
+    setFeatures, 
+    pagination, 
+    filters, 
+    handleMagTypeChange, 
+    handlePageChange, 
+    handlePerPageChange, 
+    createComment, 
+    fetchCommentsForFeature,
+    alertOpen,
+    setAlertOpen,
+    alertMessage
+  };
 };
 
 export default useSismicData;
